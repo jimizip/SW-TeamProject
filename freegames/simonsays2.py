@@ -36,10 +36,10 @@ def flash(tile):  #플래쉬 부분
     glow, dark = tiles[tile]
     square(tile.x, tile.y, 200, glow) #빛내고
     update()
-    sleep(0.5)  #0.5초간 정지 후 다음 시행
+    sleep(0.1)  #0.1초간 정지 후 다음 시행 !!!!!!!!!!!!!!! 해당부분 코드수정 !!!!!!!!!!!!!!!!!!!
     square(tile.x, tile.y, 200, dark) #어두워짐
     update()
-    sleep(0.5)
+    sleep(0.1)
 
 
 def grow():  #패턴과 플래쉬 타일 확장하는 함수
