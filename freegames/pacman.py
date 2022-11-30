@@ -15,18 +15,18 @@ from turtle import *
 from freegames import floor, vector
 
 state = {'score': 0}
-path = Turtle(visible=False)
+path = Turtle(visible=False) 
 writer = Turtle(visible=False)
-aim = vector(5, 0)
-pacman = vector(-40, -80)
-ghosts = [
+aim = vector(5,0)  #목표 방향 설정 vector(양수/음수,0)-우측/좌측, vector(0,양수/음수)-위/아래
+pacman = vector(-40, -80) #플레이어의 시작 위치
+ghosts = [   #고스트들의 시작 위치
     [vector(-180, 160), vector(5, 0)],
     [vector(-180, -160), vector(0, 5)],
     [vector(100, 160), vector(0, -5)],
     [vector(100, -160), vector(-5, 0)],
 ]
 # fmt: off
-tiles = [
+tiles = [        #맵의 생김새
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
     0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
@@ -65,7 +65,7 @@ def square(x, y):
     path.end_fill()
 
 
-def offset(point):
+def offset(point):  #좌표에 따라 배열의 인덱스 값을 반환해주는 함수
     """Return offset of point in tiles."""
     x = (floor(point.x, 20) + 200) / 20
     y = (180 - floor(point.y, 20)) / 20
@@ -73,8 +73,7 @@ def offset(point):
     return index
 
 
-def valid(point):
-    """Return True if point is valid in tiles."""
+def valid(point):    #유효성을 판별해주는 함수 
     index = offset(point)
 
     if tiles[index] == 0:
@@ -88,13 +87,12 @@ def valid(point):
     return point.x % 20 == 0 or point.y % 20 == 0
 
 
-def world():
-    """Draw world using path."""
-    bgcolor('black')
-    path.color('blue')
+def world(): #맵을 만드는 함수 world 
+    bgcolor('black')#배경을 검정.
+    path.color('blue')                                                  #
 
-    for index in range(len(tiles)):
-        tile = tiles[index]
+    for index in range(len(tiles)):     #tiles 배열에 들어간 수만큼 반복
+        tile = tiles[index]        #  tiles의 값을 tile에 저장 0 or 1
 
         if tile > 0:
             x = (index % 20) * 20 - 200
@@ -104,49 +102,49 @@ def world():
             if tile == 1:
                 path.up()
                 path.goto(x + 10, y + 10)
-                path.dot(2, 'white')
+                path.dot(2, 'white')     #점수를 얻을 수 있는 팩맨의 먹이에 해당 dot(size,*color)
 
 
 def move():
     """Move pacman and all ghosts."""
-    writer.undo()
-    writer.write(state['score'])
+    writer.undo()    #마지막 writer 의 동작실행 취소
+    writer.write(state['score'])    #화면에 글자 쓰기'score' 
 
-    clear()
+    clear()  #지나온 잔상을 없애줌
 
     if valid(pacman + aim):
         pacman.move(aim)
 
     index = offset(pacman)
 
-    if tiles[index] == 1:
-        tiles[index] = 2
-        state['score'] += 1
+    if tiles[index] == 1:   #tiles의 인덱스 값이 1일 경우
+        tiles[index] = 2   #tiles의 인덱스 값을 2로 바꿔서 지나온 길로 만듦
+        state['score'] += 1   #tiles의 인덱스가 1인 경우에는 score값에 +1을 해줌
         x = (index % 20) * 20 - 200
         y = 180 - (index // 20) * 20
         square(x, y)
 
     up()
     goto(pacman.x + 10, pacman.y + 10)
-    dot(20, 'yellow')
+    dot(20, 'yellow')  #플레이어 팩맨의 점의 속성(크기,색상)
 
     for point, course in ghosts:
         if valid(point + course):
             point.move(course)
         else:
-            options = [
+            options = [     #옵션은 오른쪽,왼쪽,위,아래가 있음
                 vector(5, 0),
                 vector(-5, 0),
                 vector(0, 5),
                 vector(0, -5),
             ]
-            plan = choice(options)
+            plan = choice(options) #랜덤으로 옵션중에 하나를 선택.
             course.x = plan.x
             course.y = plan.y
 
         up()
         goto(point.x + 10, point.y + 10)
-        dot(20, 'red')
+        dot(20, 'red')  #장애물의 속성(크기,색상)
 
     update()
 
@@ -154,11 +152,10 @@ def move():
         if abs(pacman - point) < 20:
             return
 
-    ontimer(move, 100)
+    ontimer(move, 100)       #ontimer(함수,시간) 일정 시간 뒤에 실행
 
 
-def change(x, y):
-    """Change pacman aim if valid."""
+def change(x, y):    #팩맨의 목표방향 바꾸기
     if valid(pacman + vector(x, y)):
         aim.x = x
         aim.y = y
@@ -166,15 +163,15 @@ def change(x, y):
 
 setup(420, 420, 370, 0)
 hideturtle()
-tracer(False)
-writer.goto(160, 160)
-writer.color('white')
-writer.write(state['score'])
-listen()
-onkey(lambda: change(5, 0), 'Right')
-onkey(lambda: change(-5, 0), 'Left')
+tracer(False) #전체 터틀의 자취를 보지 않게 함. 해당 코드를 없애면 맵 생성 과정을 볼 수 있음.
+writer.goto(160, 160) #점수판의 위치
+writer.color('white') #점수판의 색깔
+writer.write(state['score']) 
+listen() #사용자의 입출력을 받는 소켓프로그래밍 listen함수
+onkey(lambda: change(5, 0), 'Right')#onkey함수로 아이콘을 이동시킴 onkey(fun,key)
+onkey(lambda: change(-5, 0), 'Left')#lamda = 사용하던 방식과는 달리 바로 정의하여 사용할 수 있는 함수
 onkey(lambda: change(0, 5), 'Up')
 onkey(lambda: change(0, -5), 'Down')
-world()
-move()
+world()#맵 생성
+move() #동작 실행
 done()
