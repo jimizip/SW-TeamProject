@@ -20,10 +20,10 @@ writer = Turtle(visible=False)
 aim = vector(5,0)  #목표 방향 설정 vector(양수/음수,0)-우측/좌측, vector(0,양수/음수)-위/아래
 pacman = vector(-40, -80) #플레이어의 시작 위치
 ghosts = [   #고스트들의 시작 위치
-    [vector(-180, 160), vector(5, 0)],
-    [vector(-180, -160), vector(0, 5)],
-    [vector(100, 160), vector(0, -5)],
-    [vector(100, -160), vector(-5, 0)],
+    [vector(-180, 160), vector(10, 0)],
+    [vector(-180, -160), vector(0, 10)],
+    [vector(100, 160), vector(0, -10)],
+    [vector(100, -160), vector(-10, 0)],
 ]
 # fmt: off
 tiles = [        #맵의 생김새
@@ -110,33 +110,33 @@ def move():
     writer.undo()    #마지막 writer 의 동작실행 취소
     writer.write(state['score'])    #화면에 글자 쓰기'score' 
 
-    clear()  #지나온 잔상을 없애줌
+    clear()       #지나온 잔상을 없애줌
 
     if valid(pacman + aim):
         pacman.move(aim)
 
     index = offset(pacman)
 
-    if tiles[index] == 1:   #tiles의 인덱스 값이 1일 경우
-        tiles[index] = 2   #tiles의 인덱스 값을 2로 바꿔서 지나온 길로 만듦
-        state['score'] += 1   #tiles의 인덱스가 1인 경우에는 score값에 +1을 해줌
+    if tiles[index] == 1:      #tiles의 인덱스 값이 1일 경우
+        tiles[index] = 2       #tiles의 인덱스 값을 2로 바꿔서 지나온 길로 만듦
+        state['score'] += 1     #tiles의 인덱스가 1인 경우에는 score값에 +1을 해줌
         x = (index % 20) * 20 - 200
         y = 180 - (index // 20) * 20
         square(x, y)
 
     up()
     goto(pacman.x + 10, pacman.y + 10)
-    dot(20, 'yellow')  #플레이어 팩맨의 점의 속성(크기,색상)
+    dot(20, 'yellow')                                               #플레이어 팩맨의 점의 속성(크기,색상)
 
     for point, course in ghosts:
         if valid(point + course):
             point.move(course)
         else:
-            options = [     #옵션은 오른쪽,왼쪽,위,아래가 있음
-                vector(5, 0),
-                vector(-5, 0),
-                vector(0, 5),
-                vector(0, -5),
+            options = [     #옵션은 오른쪽,왼쪽,위,아래가 있음 !!!!!!!!!!수정 부분!!!!!!!!!!!!!!!!!
+                vector(10, 0),
+                vector(-10, 0),
+                vector(0, 10),
+                vector(0, -10),
             ]
             plan = choice(options) #랜덤으로 옵션중에 하나를 선택.
             course.x = plan.x
@@ -144,7 +144,7 @@ def move():
 
         up()
         goto(point.x + 10, point.y + 10)
-        dot(20, 'red')  #장애물의 속성(크기,색상)
+        dot(20, 'red')                                                                  #장애물의 속성(크기,색상)
 
     update()
 
@@ -152,10 +152,10 @@ def move():
         if abs(pacman - point) < 20:
             return
 
-    ontimer(move, 100)       #ontimer(함수,시간) 일정 시간 뒤에 실행
+    ontimer(move, 100)                                                  #ontimer(함수,시간) 일정 시간 뒤에 실행
 
 
-def change(x, y):    #팩맨의 목표방향 바꾸기
+def change(x, y):                                                                       #팩맨의 목표방향 바꾸기
     if valid(pacman + vector(x, y)):
         aim.x = x
         aim.y = y
