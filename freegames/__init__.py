@@ -59,11 +59,12 @@ code. To launch the editor and make changes to the "snake" game run::
 
 from .utils import floor, line, path, square, vector
 
+# 게임에 사용될 floor, line, path, square, vector 기능을 선언하는 __all__ 생성자를 생성합니다.
 __all__ = ['floor', 'line', 'path', 'square', 'vector']
 
-__title__ = 'freegames'
-__version__ = '2.4.0'
-__build__ = 0x020400
-__author__ = 'Grant Jenks'
-__license__ = 'Apache 2.0'
-__copyright__ = '2017-2022, Grant Jenks'
+__title__ = 'freegames' #  제목을 선언하는 __title__ 생성자를 생성합니다.
+__version__ = '2.4.0' # 버전을 선언하는 __version__ 생성자를 생성합니다.
+__build__ = 0x020400 # 빌드를 선언하는 __build__ 생성자를 생성합니다.
+__author__ = 'Grant Jenks' # 저자를 선언하는 __author__ 생성자를 생성합니다.
+__license__ = 'Apache 2.0' # 라이센스를 선언하는 __license__ 생성자를 생성합니다.
+__copyright__ = '2017-2022, Grant Jenks' # 저작권을 선언하는 __copyright__ 생성자를 생성합니다.

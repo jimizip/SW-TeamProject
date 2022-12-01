@@ -7,7 +7,7 @@ import math
 import os
 
 
-def floor(value, size, offset=200):
+def floor(value, size, offset=200): # -offset ~ offset 범위의 숫자 중 value보다 작은 size의 배수인 수를 반환
     """Floor of `value` given `size` and `offset`.
 
     The floor function is best understood with a diagram of the number line::
@@ -36,25 +36,24 @@ def floor(value, size, offset=200):
     return float(((value + offset) // size) * size - offset)
 
 
-def path(filename):
+def path(filename): # 전체 경로 반환 (filename의 경로를 알려줌)
     """Return full path to `filename` in freegames module."""
-    filepath = os.path.realpath(__file__)
-    dirpath = os.path.dirname(filepath)
-    fullpath = os.path.join(dirpath, filename)
+    filepath = os.path.realpath(__file__) # 파일 이름을 가져옴
+    dirpath = os.path.dirname(filepath )# 디렉터리 반환
+    fullpath = os.path.join(dirpath, filename) # 경로 구성 요소를 결합하여 전체 경로를 만듦.
     return fullpath
 
 
-def line(a, b, x, y):
+def line(a, b, x, y): # a,b 좌표에서 x, y좌표로 선을 그음
     """Draw line from `(a, b)` to `(x, y)`."""
-    import turtle
+    import turtle # turtle 모듈 선언
+    turtle.up() # 거북이가 이동할 때는 그림을 그리지 않음
+    turtle.goto(a, b) # (a,b로 이동)
+    turtle.down() # 거북이가 이동할 때 그림 그림
+    turtle.goto(x, y) # (x,y로 이동)
 
-    turtle.up()
-    turtle.goto(a, b)
-    turtle.down()
-    turtle.goto(x, y)
 
-
-def square(x, y, size, name):
+def square(x, y, size, name):  #x,y 좌표에서 size만큼의 정사각형을 그려줍니다. 해당 정사각형은 name의  색
     """Draw square at `(x, y)` with side length `size` and fill color `name`.
 
     The square is oriented so the bottom left corner is at (x, y).
@@ -65,17 +64,17 @@ def square(x, y, size, name):
     turtle.up()
     turtle.goto(x, y)
     turtle.down()
-    turtle.color(name)
-    turtle.begin_fill()
+    turtle.color(name) # 색을 name으로 바꿈
+    turtle.begin_fill() # 거북이가 그릴 도형 채움
 
     for count in range(4):
-        turtle.forward(size)
-        turtle.left(90)
+        turtle.forward(size) # 거북이를 size 만큼 이동
+        turtle.left(90) # 거북이를 왼쪽으로 90도 회전
 
-    turtle.end_fill()
+    turtle.end_fill() # 거북이가 그릴 도형을 채우지 X
 
 
-class vector(collections.abc.Sequence):
+class vector(collections.abc.Sequence): # 2차원 벡터를 나타내는 클래스
     """Two-dimensional vector.
 
     Vectors can be modified in-place.
@@ -90,12 +89,12 @@ class vector(collections.abc.Sequence):
 
     """
 
-    # pylint: disable=invalid-name
+    # pylint: disable=invalid-name - > 동일한 에러를 발생시키지 않는
     PRECISION = 6
 
-    __slots__ = ('_x', '_y', '_hash')
+    __slots__ = ('_x', '_y', '_hash') # 기존의 딕셔너리로 관리하는 속성을 집합 형태의 Set으로 바꿈
 
-    def __init__(self, x, y):
+    def __init__(self, x, y): # init 생성자 메소드로 클래스를 만들때 본인 값을x ,y 로 초기화
         """Initialize vector with coordinates: x, y.
 
         >>> v = vector(1, 2)
@@ -110,7 +109,7 @@ class vector(collections.abc.Sequence):
         self._y = round(y, self.PRECISION)
 
     @property
-    def x(self):
+    def x(self): #벡터의 x축 성분 반환값 x
         """X-axis component of vector.
 
         >>> v = vector(1, 2)
@@ -123,14 +122,14 @@ class vector(collections.abc.Sequence):
         """
         return self._x
 
-    @x.setter
+    @x.setter #x의 setter 메소드
     def x(self, value):
-        if self._hash is not None:
-            raise ValueError('cannot set x after hashing')
+        if self._hash is not None: # _hash가 None이 아니면
+            raise ValueError('cannot set x after hashing') # 예외 처리
         self._x = round(value, self.PRECISION)
 
     @property
-    def y(self):
+    def y(self): #벡터의 y축 성분 반환값 y
         """Y-axis component of vector.
 
         >>> v = vector(1, 2)
@@ -143,13 +142,13 @@ class vector(collections.abc.Sequence):
         """
         return self._y
 
-    @y.setter
+    @y.setter  #y값 설정 setter 메소드 
     def y(self, value):
-        if self._hash is not None:
+        if self._hash is not None: # _hash가 None이 아니면
             raise ValueError('cannot set y after hashing')
         self._y = round(value, self.PRECISION)
 
-    def __hash__(self):
+    def __hash__(self): # x, y 값 고정 __ hash __ 는 동일한 객체에 대해 동일한 값을 반환해야함
         """v.__hash__() -> hash(v)
 
         >>> v = vector(1, 2)
@@ -160,12 +159,12 @@ class vector(collections.abc.Sequence):
         ValueError: cannot set x after hashing
 
         """
-        if self._hash is None:
-            pair = (self.x, self.y)
+        if self._hash is None: # _hash가 None이 아니면
+            pair = (self.x, self.y) # pair에 (_x, _y) 저장
             self._hash = hash(pair)
         return self._hash
 
-    def __len__(self):
+    def __len__(self): # 벡터 길이 반환 메소드
         """v.__len__() -> len(v)
 
         >>> v = vector(1, 2)
@@ -175,7 +174,7 @@ class vector(collections.abc.Sequence):
         """
         return 2
 
-    def __getitem__(self, index):
+    def __getitem__(self, index): # x,y 좌표 반환 메소드
         """v.__getitem__(v, i) -> v[i]
 
         >>> v = vector(3, 4)
@@ -189,13 +188,13 @@ class vector(collections.abc.Sequence):
         IndexError
 
         """
-        if index == 0:
-            return self.x
-        if index == 1:
-            return self.y
-        raise IndexError
+        if index == 0: # index가 0이면
+            return self.x # _x 반환
+        if index == 1: # index가 1이면
+            return self.y # _y 반환
+        raise IndexError # 예외 발생
 
-    def copy(self):
+    def copy(self):  #벡터의 복사본 반환 메소드
         """Return copy of vector.
 
         >>> v = vector(1, 2)
@@ -204,10 +203,10 @@ class vector(collections.abc.Sequence):
         False
 
         """
-        type_self = type(self)
+        type_self = type(self) # 벡터의 생성자 저장
         return type_self(self.x, self.y)
 
-    def __eq__(self, other):
+    def __eq__(self, other): # 벡터의 동일함 판별, 정의
         """v.__eq__(w) -> v == w
 
         >>> v = vector(1, 2)
@@ -216,11 +215,11 @@ class vector(collections.abc.Sequence):
         True
 
         """
-        if isinstance(other, vector):
-            return self.x == other.x and self.y == other.y
+        if isinstance(other, vector): # isinstance(other, vector)가 true라면
+            return self.x == other.x and self.y == other.y # _x에 other.x, _y에 other.y 저장
         return NotImplemented
 
-    def __ne__(self, other):
+    def __ne__(self, other): # notequal를 판별, 정의
         """v.__ne__(w) -> v != w
 
         >>> v = vector(1, 2)
@@ -229,11 +228,11 @@ class vector(collections.abc.Sequence):
         True
 
         """
-        if isinstance(other, vector):
-            return self.x != other.x or self.y != other.y
+        if isinstance(other, vector): # isinstance(other, vector)가 true라면
+            return self.x != other.x or self.y != other.y 
         return NotImplemented
 
-    def __iadd__(self, other):
+    def __iadd__(self, other): # (본인의 값, add값) += 연산자 판별, 정의
         """v.__iadd__(w) -> v += w
 
         >>> v = vector(1, 2)
@@ -246,17 +245,17 @@ class vector(collections.abc.Sequence):
         vector(5, 7)
 
         """
-        if self._hash is not None:
+        if self._hash is not None: 
             raise ValueError('cannot add vector after hashing')
-        if isinstance(other, vector):
-            self.x += other.x
-            self.y += other.y
-        else:
-            self.x += other
-            self.y += other
+        if isinstance(other, vector): # isinstance(other, vector)가 true라면
+            self.x += other.x # self.x에 other.x를 더함
+            self.y += other.y # self.y에 other.y를 더함
+        else: # 그렇지 않다면
+            self.x += other # self.x에 other를 더함
+            self.y += other # self.y에 other를 더함
         return self
 
-    def __add__(self, other):
+    def __add__(self, other): # add 메소드-> + 연산자 판별, 정의
         """v.__add__(w) -> v + w
 
         >>> v = vector(1, 2)
@@ -269,12 +268,12 @@ class vector(collections.abc.Sequence):
         vector(3.0, 4.0)
 
         """
-        copy = self.copy()
-        return copy.__iadd__(other)
+        copy = self.copy() # self.copy를 copy에 저장
+        return copy.__iadd__(other) # 반환
 
-    __radd__ = __add__
+    __radd__ = __add__ # __radd__에 __add__ 저장
 
-    def move(self, other):
+    def move(self, other): #self 값에서 other값을 더해 이동해주는 메소드
         """Move vector by other (in-place).
 
         >>> v = vector(1, 2)
@@ -289,7 +288,7 @@ class vector(collections.abc.Sequence):
         """
         self.__iadd__(other)
 
-    def __isub__(self, other):
+    def __isub__(self, other): #본인값을 기준 -= 연산자 판별, 정의
         """v.__isub__(w) -> v -= w
 
         >>> v = vector(1, 2)
@@ -302,17 +301,17 @@ class vector(collections.abc.Sequence):
         vector(-3, -3)
 
         """
-        if self._hash is not None:
-            raise ValueError('cannot subtract vector after hashing')
-        if isinstance(other, vector):
-            self.x -= other.x
-            self.y -= other.y
-        else:
-            self.x -= other
-            self.y -= other
+        if self._hash is not None: # _hash가 None이 아니면
+            raise ValueError('cannot subtract vector after hashing') # 예외 발생
+        if isinstance(other, vector): # isinstance(other, vector)가 true라면
+            self.x -= other.x # _x에 other.x를 뺀다
+            self.y -= other.y # _y에 other.y를 뺀다
+        else: # 그렇지 않다면
+            self.x -= other # _x에 other를 뺀다
+            self.y -= other # _y에 other를 뺀다
         return self
 
-    def __sub__(self, other):
+    def __sub__(self, other): #뺄셈(-) 역할 메소드
         """v.__sub__(w) -> v - w
 
         >>> v = vector(1, 2)
@@ -326,7 +325,7 @@ class vector(collections.abc.Sequence):
         copy = self.copy()
         return copy.__isub__(other)
 
-    def __imul__(self, other):
+    def __imul__(self, other): #본인 값을 기준 ,곱셈 역할(*=) 메소드
         """v.__imul__(w) -> v *= w
 
         >>> v = vector(1, 2)
@@ -342,14 +341,14 @@ class vector(collections.abc.Sequence):
         if self._hash is not None:
             raise ValueError('cannot multiply vector after hashing')
         if isinstance(other, vector):
-            self.x *= other.x
-            self.y *= other.y
+            self.x *= other.x # _x에 other.x를 곱한다
+            self.y *= other.y # _y에 other.y를 곱한다
         else:
-            self.x *= other
-            self.y *= other
+            self.x *= other # _x에 other를 곱한다
+            self.y *= other # _y에 other를 곱한다
         return self
 
-    def __mul__(self, other):
+    def __mul__(self, other): #곱셈 역할(*) 메소드
         """v.__mul__(w) -> v * w
 
         >>> v = vector(1, 2)
@@ -367,7 +366,7 @@ class vector(collections.abc.Sequence):
 
     __rmul__ = __mul__
 
-    def scale(self, other):
+    def scale(self, other): # (imul사용) other로 self를 스케일링
         """Scale vector by other (in-place).
 
         >>> v = vector(1, 2)
@@ -380,9 +379,9 @@ class vector(collections.abc.Sequence):
         vector(1.5, 4.0)
 
         """
-        self.__imul__(other)
+        self.__imul__(other) # self.__imul__(other)를 호출
 
-    def __itruediv__(self, other):
+    def __itruediv__(self, other):  # v를 w로 나누는(/=) 메소드
         """v.__itruediv__(w) -> v /= w
 
         >>> v = vector(2, 4)
@@ -398,14 +397,14 @@ class vector(collections.abc.Sequence):
         if self._hash is not None:
             raise ValueError('cannot divide vector after hashing')
         if isinstance(other, vector):
-            self.x /= other.x
-            self.y /= other.y
+            self.x /= other.x # _x에 other.x를 나눈다
+            self.y /= other.y # _y에 other.y를 나눈다
         else:
-            self.x /= other
-            self.y /= other
+            self.x /= other # _x에 other를 나눈다
+            self.y /= other # _y에 other를 나눈다
         return self
 
-    def __truediv__(self, other):
+    def __truediv__(self, other): # w를 v로 나누는(/) 메소드
         """v.__truediv__(w) -> v / w
 
         >>> v = vector(1, 2)
@@ -419,7 +418,7 @@ class vector(collections.abc.Sequence):
         copy = self.copy()
         return copy.__itruediv__(other)
 
-    def __neg__(self):
+    def __neg__(self): # v에 -1을 곱한 값 출력 (음수를 정의)
         """v.__neg__() -> -v
 
         >>> v = vector(1, 2)
@@ -433,7 +432,8 @@ class vector(collections.abc.Sequence):
         copy.y = -copy.y
         return copy
 
-    def __abs__(self):
+    def __abs__(self): # 밑변과 높이를 이용해 빗변을 알아내는 메소드
+        # 벡터의 크기를 알려줌
         """v.__abs__() -> abs(v)
 
         >>> v = vector(3, 4)
@@ -443,7 +443,8 @@ class vector(collections.abc.Sequence):
         """
         return (self.x ** 2 + self.y ** 2) ** 0.5
 
-    def rotate(self, angle):
+    def rotate(self, angle):  # 좌표를 x축 기준으로 뒤집은 결과를 보여주는 메소드
+        # 벡터 회전
         """Rotate vector counter-clockwise by angle (in-place).
 
         >>> v = vector(1, 2)
@@ -462,7 +463,7 @@ class vector(collections.abc.Sequence):
         self.x = x * cosine - y * sine
         self.y = y * cosine + x * sine
 
-    def __repr__(self):
+    def __repr__(self): # 벡터를 문자열로 나타냄
         """v.__repr__() -> repr(v)
 
         >>> v = vector(1, 2)
@@ -472,4 +473,4 @@ class vector(collections.abc.Sequence):
         """
         type_self = type(self)
         name = type_self.__name__
-        return '{}({!r}, {!r})'.format(name, self.x, self.y)
+        return '{}({!r}, {!r})'.format(name, self.x, self.y) # 문자열로 만들어서 반환
