@@ -57,7 +57,8 @@ def draw():
     square(p1xy.x, p1xy.y, 3, 'red')
     square(p2xy.x, p2xy.y, 3, 'blue')
     update()
-    ontimer(draw, 50)
+    #!!!!!!! 코드 수정 부분 속도 변경 -> 너무 빨라서 게임 진행이 어려움!!!!!!
+    ontimer(draw, 100)
 
 # 게임 화면 설정
 setup(420, 420, 370, 0)
@@ -65,9 +66,12 @@ hideturtle()
 tracer(False)
 listen()
 # 각 플레이어가 이동하는 방식을 제어하는 ​​데 사용되는 람다 함수 생성
+#!!!!!!! 코드 수정 부분 속도 변경 -> 방향키 추가
 onkey(lambda: p1aim.rotate(90), 'a')
+onkey(lambda: p1aim.rotate(180), 'w')
 onkey(lambda: p1aim.rotate(-90), 'd')
 onkey(lambda: p2aim.rotate(90), 'j')
+onkey(lambda: p2aim.rotate(90), 'i')
 onkey(lambda: p2aim.rotate(-90), 'l')
 draw()
 done()

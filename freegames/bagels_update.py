@@ -14,7 +14,8 @@ Adapted from code in https://inventwithpython.com/chapter11.html
 from random import sample, shuffle
 
 # 변수의 초기값 설정
-digits = 3          # 유저가 맞추어야 하는 숫자의 크기 (000 : 세자리 수)
+# !!!!!!코드 수정부분 숫자야구 3개로 진행하는것을 4개로 변경
+digits = 4          # 유저가 맞추어야 하는 숫자의 크기 (0000 : 네자리 수)
 guesses = 10
 
 print('I am thinking of a', digits, 'digit number.')
