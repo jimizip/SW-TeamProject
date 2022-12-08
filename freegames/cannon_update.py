@@ -128,21 +128,21 @@ class Button:
     def isButton(self, x, y):
         return self.startx <= x and x <= self.startx + self.sizex and self.starty <= y and y <= self.starty+self.sizey
 
-def chkButton(x, y):
+def checkButton(x, y):
     global buttons
     global choice
     for button in buttons :
         if button.isButton(x, y):
-            if button.getString() == "easy":
-                print("easy")
+            if button.getString() == "하":
+                print("하")
                 choice = 40 #타겟 출현 빈도: (40). (100)이면 적게 나옴. (3)이면 많이 나옴.
 
-            if button.getString() == "normal":
-                print("normal")
+            if button.getString() == "중":
+                print("중")
                 choice = 20 #타겟 출현 빈도: (20). easy모드보다 2배 더 많이 나옴.
 
-            if button.getString() == "hard":
-                print("hard")
+            if button.getString() == "상":
+                print("상")
                 choice = 10 #타겟 출현 빈도: (10). easy모드보다 4배 더 많이 나옴.
 
             clear()
@@ -152,10 +152,10 @@ def chkButton(x, y):
 
 
 def diffInit():
-    buttons.append(Button(-155, 0, 50, 30, 'gray', 'easy'))
-    buttons.append(Button(-25, 0, 50, 30, 'gray', 'normal'))
-    buttons.append(Button(105, 0, 50, 30, 'gray', 'hard'))
-    onscreenclick(chkButton)
+    buttons.append(Button(-155, 0, 50, 30, 'pink', '하'))
+    buttons.append(Button(-25, 0, 50, 30, 'pink', '중'))
+    buttons.append(Button(105, 0, 50, 30, 'pink', '상'))
+    onscreenclick(checkButton)
     for button in buttons:
         button.draw()
     update()
@@ -174,7 +174,6 @@ def main():
     hideturtle() #거북이를 숨기고 주석화하면 공에 검은거북이가 붙어서 출현한다
     up() #펜을 도화지에서 떼고 공과 타겟이 이동 시, 자취 선을 그리지 않는다
     tracer(False) #그리기 과정을 생략한다.
-
     reset()
     diffInit()
 
