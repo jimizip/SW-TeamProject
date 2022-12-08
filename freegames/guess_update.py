@@ -19,9 +19,9 @@ print("I'm thinking of a number between", start, 'and', end)
 
 guess = None #guess값을 비워둠
 count = 0
-num = 5
+number = 5
 
-while num != count and guess != value: #guess값이 value값과 다를때
+while number != count and guess != value: #guess값이 value값과 다를때
     text = input('Guess the number: ') #text를 입력받아
     guess = int(text) #guess 변수에 정수로 저장
 
@@ -38,7 +38,7 @@ while num != count and guess != value: #guess값이 value값과 다를때
     else :
         print("Congratulations! You guessed the right answer:", value)
 
-if num == count :
+if number == count :
     print("Sorry.. You loose")
 
 #문제점 : 문제를 한번 못맞추면 시간이 오래 걸릴 것 같습니다.
