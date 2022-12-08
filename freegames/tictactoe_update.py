@@ -13,7 +13,7 @@ from turtle import * #turtle 모듈
 from freegames import line #freegame의 line모듈
 
 #변수 선언
-p = None
+point = None
 spot = None
 count = None
 state = None
@@ -21,8 +21,8 @@ players = None
 
 #초기화 함수
 def initialize():
-    global p, spot, count, state, players
-    p = [[1,2,3], [4,5,6], [7,8,9]]
+    global point, spot, count, state, players
+    point = [[1,2,3], [4,5,6], [7,8,9]]
     spot = [] #아무 칸도 안눌린 상태
     count = 0
     state = {'player': 0} #현재 상태는 0이다
@@ -42,7 +42,7 @@ def drawx(x, y):
     color("red")
     global spot #전역변수 선언
     global count
-    global p
+    global point
     count = 0
     for i in spot:
         if i == (x,y):
@@ -55,22 +55,22 @@ def drawx(x, y):
 
         if x == -200.0 :
             if y == 66.0 :
-                p[0][0] = "x"
+                point[0][0] = "x"
             elif y == -67.0 :
-                p[1][0] = "x"
-            else : p[2][0] = "x"
+                point[1][0] = "x"
+            else : point[2][0] = "x"
         elif x == -67.0 :
             if y == 66.0 :
-                p[0][1] = "x"
+                point[0][1] = "x"
             elif y == -67.0 :
-                p[1][1] = "x"
-            else : p[2][1] = "x"
+                point[1][1] = "x"
+            else : point[2][1] = "x"
         else :
             if y == 66.0 :
-                p[0][2]= 'x'
+                point[0][2]= 'x'
             elif y == -67.0 :
-                p[1][2] = 'x'
-            else : p[2][2] = 'x'
+                point[1][2] = 'x'
+            else : point[2][2] = 'x'
     print_win()
 
 #o직선을 그리는 함수
@@ -82,7 +82,7 @@ def drawo(x, y):
     color("blue")
     global spot #전역변수 선언
     global count
-    global p
+    global point
     count = 0
     for i in spot:
         if i == (x,y):
@@ -93,22 +93,22 @@ def drawo(x, y):
         spot +=[(x, y)]
         if x == -200.0 :
             if y == 66.0 :
-                p[0][0] = 'o'
+                point[0][0] = 'o'
             elif y == -67.0 :
-                p[1][0] = 'o'
-            else : p[2][0] = 'o'
+                point[1][0] = 'o'
+            else : point[2][0] = 'o'
         elif x == -67.0 :
             if y == 66.0 :
-                p[0][1] = 'o'
+                point[0][1] = 'o'
             elif y == -67.0 :
-                p[1][1] = 'o'
-            else : p[2][1] = 'o'
+                point[1][1] = 'o'
+            else : point[2][1] = 'o'
         else :
             if y == 66.0 :
-                p[0][2]= 'o'
+                point[0][2]= 'o'
             elif y == -67.0 :
-                p[1][2] = 'o'
-            else : p[2][2] = 'o'
+                point[1][2] = 'o'
+            else : point[2][2] = 'o'
     print_win()
 
 #값을 사각형 크기 133의 그리드로 반올림하는 함수
@@ -129,27 +129,27 @@ def tap(x, y):
     state['player'] = not player #player의 상태는 player가 아니다
 
 def print_win():
-    global p
-    if str(p[0][0]) == str(p[1][1]) == str(p[2][2]) or str(p[2][0]) == str(p[1][1]) == str(p[0][2]):
+    global point
+    if str(point[0][0]) == str(point[1][1]) == str(point[2][2]) or str(point[2][0]) == str(point[1][1]) == str(point[0][2]):
         goto(0,0)
-        if (p[0][0] == 'x')or(str(p[2][0]) == 'x') :
+        if (point[0][0] == 'x')or(str(point[2][0]) == 'x') :
             color("red")
             write('player1 Win', move = False, align='center', font=('Courier', 30, 'normal'))
         else :
             color("blue")
             write('player2 Win', move = False, align='center', font=('Courier', 30, 'normal'))
     for i in range(3):
-        if str(p[0][i]) == str(p[1][i]) == str(p[2][i]):
+        if str(point[0][i]) == str(point[1][i]) == str(point[2][i]):
             goto(0,0)
-            if str(p[0][i]) == str(p[1][i]) == str(p[2][i]) == 'x' :
+            if str(point[0][i]) == str(point[1][i]) == str(point[2][i]) == 'x' :
                 color("red")
                 write('player1 Win', move = False, align='center', font=('Courier', 30, 'normal'))
             else :
                 color("blue")
                 write('player2 Win', move = False, align='center', font=('Courier', 30, 'normal'))
-        if str(p[i][0]) == str(p[i][1]) == str(p[i][2]):
+        if str(point[i][0]) == str(point[i][1]) == str(point[i][2]):
             goto(0,0)
-            if str(p[i][0]) == str(p[i][1]) == str(p[i][2]) == 'x' :
+            if str(point[i][0]) == str(point[i][1]) == str(point[i][2]) == 'x' :
                 color("red")
                 write('player1 Win', move = False, align='center', font=('Courier', 30, 'normal'))
             else :
