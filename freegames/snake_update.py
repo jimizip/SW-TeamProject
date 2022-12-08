@@ -16,11 +16,11 @@ from freegames import square, vector #freegames의 square 모듈
 #게임 시작시에 food, snake, aim의 위치를 vector를 통하여 지정한다
 
 food = vector(0, 0)
-obstacle1 = vector(20, 10)
-obstacle2 = vector(20, 10)
-obstacle3 = vector(20, 10)
-obstacle4 = vector(20, 10)
-obstacle5 = vector(20, 10)
+obstacle_1 = vector(25, 15)
+obstacle_2 = vector(25, 15)
+obstacle_3 = vector(25, 15)
+obstacle_4 = vector(25, 15)
+obstacle_5 = vector(25, 15)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
 writer = Turtle(visible=False)
@@ -49,7 +49,7 @@ def move():
         update() #위의 과정을 업데이트한다.
         return #반환
 
-    elif (head == obstacle1) or (head == obstacle2) or (head == obstacle3) or (head == obstacle4) or (head == obstacle5):
+    elif (head == obstacle_1) or (head == obstacle_2) or (head == obstacle_3) or (head == obstacle_4) or (head == obstacle_5):
         square(head.x, head.y, 9, 'red') #snake의 끝에 head를 추가한다.
         update() #업데이트한다
         return # 반환한다
@@ -60,16 +60,16 @@ def move():
         print('Snake:', len(snake)) #snake의 길이를 출력
         food.x = randrange(-15, 15) * 10 #food의 x를 randrange를 통해 -15부터 15까지 증분하여 10을 곱한다
         food.y = randrange(-15, 15) * 10 ##food의 y를 randrange를 통해 -15부터 15까지 증분하여 10을 곱한다
-        obstacle1.x = randrange(-15, 15) * 10 #장애물 추가
-        obstacle1.y = randrange(-15, 15) * 10
-        obstacle2.x = randrange(-15, 15) * 10
-        obstacle2.y = randrange(-15, 15) * 10
-        obstacle3.x = randrange(-15, 15) * 10
-        obstacle3.y = randrange(-15, 15) * 10
-        obstacle4.x = randrange(-15, 15) * 10
-        obstacle4.y = randrange(-15, 15) * 10
-        obstacle5.x = randrange(-15, 15) * 10
-        obstacle5.y = randrange(-15, 15) * 10
+        obstacle_1.x = randrange(-10, 10) * 10 #장애물 추가
+        obstacle_1.y = randrange(-10, 10) * 10
+        obstacle_2.x = randrange(-10, 10) * 10
+        obstacle_2.y = randrange(-10, 10) * 10
+        obstacle_3.x = randrange(-10, 10) * 10
+        obstacle_3.y = randrange(-10, 10) * 10
+        obstacle_4.x = randrange(-10, 10) * 10
+        obstacle_4.y = randrange(-10, 10) * 10
+        obstacle_5.x = randrange(-10, 10) * 10
+        obstacle_5.y = randrange(-10, 10) * 10
     else:
         snake.pop(0) #snake의 head가 food와 다를때 snake의 첫 번째 데이터를 제거
 
@@ -80,11 +80,11 @@ def move():
 
     square(food.x, food.y, 9, 'green') #snake가 body만 x와y를 초록색으로 바꾼다
 
-    square(obstacle1.x, obstacle1.y, 9, 'pink') #갱신한다
-    square(obstacle2.x, obstacle2.y, 9, 'pink')
-    square(obstacle3.x, obstacle3.y, 9, 'pink')
-    square(obstacle4.x, obstacle4.y, 9, 'pink')
-    square(obstacle5.x, obstacle5.y, 9, 'pink')
+    square(obstacle_1.x, obstacle_1.y, 9, 'gray') #갱신한다
+    square(obstacle_2.x, obstacle_2.y, 9, 'gray')
+    square(obstacle_3.x, obstacle_3.y, 9, 'gray')
+    square(obstacle_4.x, obstacle_4.y, 9, 'gray')
+    square(obstacle_5.x, obstacle_5.y, 9, 'gray')
     
     update() #위의 과정을 업데이트 한다
     ontimer(move, 100) #0.1초뒤에 움직인다.
